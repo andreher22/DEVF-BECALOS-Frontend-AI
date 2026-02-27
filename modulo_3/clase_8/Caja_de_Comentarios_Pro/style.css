@@ -1,0 +1,114 @@
+:root {
+    --bg: #f8fafc; /* Gris pizarra muy claro */
+    --card: #ffffff; /* Blanco puro para tarjetas */
+    --text-primary: #1e293b; /* Grafito oscuro */
+    --text-secondary: #475569; /* Gris Slate */
+    --accent: #334155; /* Grafito medio para botones */
+    --border: #e2e8f0; /* Borde muy sutil */
+}
+
+body {
+    background-color: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.main-wrapper { width: 100%; max-width: 650px; }
+
+.main-header { text-align: center; margin-bottom: 32px; }
+.main-header h1 { font-size: 2.2rem; font-weight: 800; margin: 0; color: #0f172a; }
+.main-header p { color: var(--text-secondary); margin-top: 8px; font-size: 1rem; }
+
+/* Estilo de la caja de publicación */
+.publisher-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    margin-bottom: 30px;
+}
+
+.input-minimalist {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    transition: all 0.2s;
+}
+
+.input-minimalist:focus {
+    outline: none;
+    border-color: #cbd5e1;
+    box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.05);
+}
+
+textarea.input-minimalist { height: 110px; resize: none; }
+
+.publisher-footer { display: flex; justify-content: flex-end; }
+
+.btn-slate {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-slate:hover { background: #1e293b; }
+
+/* Tarjetas de Comentario */
+.comment-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative;
+    border-left: 5px solid var(--border); /* El color sutil de la pizarra */
+}
+
+.author-name { font-weight: 700; color: #0f172a; font-size: 0.95rem; }
+
+.comment-card p { margin: 8px 0; color: var(--text-secondary); }
+
+.comment-footer { display: flex; gap: 14px; margin-top: 12px; }
+
+.btn-action {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.btn-action:hover { color: var(--text-primary); text-decoration: underline; }
+
+/* Estilo para las respuestas anidadas */
+.replies-container {
+    margin-left: 24px;
+    border-left: 2px solid var(--border);
+    padding-left: 16px;
+    margin-top: 16px;
+}
+
+.reply-card { margin-bottom: 10px; padding: 4px 0; }
+
+/* --- Caja de Edición Dinámica ("Bonita") --- */
+.edit-form { margin: 10px 0; display: none; }
+.edit-form.active { display: block; }
+.edit-textarea { height: 70px !important; }

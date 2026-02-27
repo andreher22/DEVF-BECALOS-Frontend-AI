@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caja de Comentarios Pro | Dialogo</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="main-header">
+            <h1>Dialogo</h1>
+            <p>Participa en una conversación.</p>
+        </header>
+        
+        <section class="publisher-card">
+            <input type="text" id="nombre-user" placeholder="Tu nombre..." class="input-minimalist">
+            <textarea id="texto-msg" placeholder="¿Qué quieres compartir con la comunidad?" class="input-minimalist"></textarea>
+            <div class="publisher-footer">
+                <button onclick="publicarPrincipal()" class="btn-slate">Publicar Comentario</button>
+            </div>
+        </section>
+
+        <section id="feed" class="comments-feed">
+            </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
