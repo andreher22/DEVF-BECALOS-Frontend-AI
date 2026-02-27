@@ -1,0 +1,72 @@
+:root {
+    --bg-dark: #18171f;
+    --container-bg: #24232c;
+    --neon-green: #a4ffaf;
+    --text-white: #e6e5ea;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.app-container { width: 350px; }
+.title { text-align: center; color: #817d92; font-size: 1.2rem; }
+
+.display-container {
+    background-color: var(--container-bg);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.config-container {
+    background-color: var(--container-bg);
+    padding: 20px;
+}
+
+.length-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.length-number { color: var(--neon-green); font-size: 1.5rem; }
+
+.slider {
+    width: 100%;
+    accent-color: var(--neon-green);
+    margin-bottom: 25px;
+}
+
+.options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+
+.strength-meter {
+    background-color: var(--bg-dark);
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.generate-btn {
+    width: 100%;
+    background-color: var(--neon-green);
+    border: none;
+    padding: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.generate-btn:hover { background: transparent; border: 2px solid var(--neon-green); color: var(--neon-green); }
+
+/* Estilo para las barras de fuerza */
+.bars { display: inline-flex; gap: 5px; margin-left: 10px; }
+.bar { width: 8px; height: 20px; border: 2px solid var(--text-white); }
+.bar.filled { background-color: #f8cd65; border-color: #f8cd65; }
