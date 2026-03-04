@@ -46,3 +46,7 @@ console.log(typeof undefined);     // Resultado: "undefined"
 // --- EXTRAS (Ejemplos propios) ---
 console.log(typeof NaN);           // Resultado: "number" (Not a Number es técnicamente un tipo número)
 console.log(typeof [1, 2, 3]);     // Resultado: "object" (Los arrays son objetos en JS)
+
+
+
+// coentario prueba
