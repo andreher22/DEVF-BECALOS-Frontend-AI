@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>☕ Simulador de Pedidos - Cafetería Asíncrona</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f5f0;
+      color: #3e2723;
+      text-align: center;
+      margin: 40px auto;
+      max-width: 600px;
+    }
+    h1 {
+      color: #5d4037;
+    }
+    button {
+      background-color: #8d6e63;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background-color: #6d4c41;
+    }
+    #contenedor-pedidos {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+    .tarjeta-pedido {
+      background: white;
+      border-left: 5px solid #ffb74d;
+      padding: 15px 20px;
+      width: 80%;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.5s ease;
+    }
+    .tarjeta-pedido.completado {
+      border-left-color: #81c784;
+      background-color: #f1f8e9;
+    }
+    .estado {
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+    .estado.proceso {
+      background-color: #fff3e0;
+      color: #e65100;
+    }
+    .estado.completado {
+      background-color: #e8f5e9;
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>☕ CoffeLoop Simulator</h1>
+  <p>Simulación asíncrona de baristas trabajando en paralelo.</p>
+  
+  <button id="btn-agregar">➕ Agregar Pedido</button>
+
+  <div id="contenedor-pedidos">
+    </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
