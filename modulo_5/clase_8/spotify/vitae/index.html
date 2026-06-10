@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔢 Adivina el Número - Vite Workshop</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app">
+    <div class="game-container">
+      <h1>🔢 Guess the Number</h1>
+      <p class="instructions">Hemos seleccionado un número secreto entre 1 y 100. ¿Podrás descubrirlo antes de que se agoten tus vidas?</p>
+      
+      <div class="input-group">
+        <input type="number" id="guess-input" min="1" max="100" placeholder="Ej. 42">
+        <button id="btn-guess">Probar Suerte 🎯</button>
+      </div>
+
+      <div class="board-stats">
+        <p>Intentos restantes: <span id="attempts-left">10</span></p>
+        <p>Números probados: <span id="guess-history">-</span></p>
+      </div>
+
+      <div id="feedback-message" class="message"></div>
+
+      <button id="btn-restart" class="btn-restart hidden">Jugar de Nuevo 🔄</button>
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
