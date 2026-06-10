@@ -1,0 +1,20 @@
+{
+  "name": "explorador-espacial-node",
+  "version": "1.0.0",
+  "description": "Taller introductorio a Node.js para el registro y gestión de planetas descubiertos.",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "sistema:check": "echo '🛰️ [Consola] Sistemas de navegación estelar en línea y operativos.'"
+  },
+  "keywords": [
+    "node",
+    "npm",
+    "workshop",
+    "space",
+    "modules"
+  ],
+  "author": "Mariano Robles Hernández",
+  "license": "ISC"
+}
