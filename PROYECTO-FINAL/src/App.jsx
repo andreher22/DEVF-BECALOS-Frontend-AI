@@ -1,41 +1,41 @@
-import { useEffect, useState } from 'react'
+import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
+import ProtectedRoute from './components/ProtectedRoute'
+import { useAuth } from './context/AuthContext'
+import Favoritos from './pages/Favoritos'
+import Home from './pages/Home'
+import Login from './pages/Login'
 
 function App() {
-  const [movies, setMovies] = useState([])
-  const [source, setSource] = useState(null)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    fetch('/api/movies/popular')
-      .then((res) => res.json())
-      .then((data) => {
-        setMovies(data.results ?? [])
-        setSource(data.source)
-      })
-      .catch(() => setError('No se pudo conectar con el backend.'))
-  }, [])
+  const { isAuthenticated, username, logout } = useAuth()
 
   return (
-    <main className="placeholder">
-      <h1>🎬 CineExplorer</h1>
-      <p>Explorador de películas y series — Proyecto Final BECALOS Frontend.</p>
-      <p className="status">
-        Solicitud de muestra a <code>GET /api/movies/popular</code> del
-        backend (Express) para validar la comunicación front-back.
-        {source && ` Origen de los datos: ${source}.`}
-      </p>
+    <>
+      <nav className="navbar">
+        <Link to="/">Inicio</Link>
+        <Link to="/favoritos">Favoritos</Link>
+        {isAuthenticated ? (
+          <span className="nav-user">
+            {username} · <button type="button" onClick={logout}>Cerrar sesión</button>
+          </span>
+        ) : (
+          <Link to="/login">Iniciar sesión</Link>
+        )}
+      </nav>
 
-      {error && <p className="error">{error}</p>}
-
-      <ul className="movie-list">
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <strong>{movie.title}</strong> ({movie.release_date?.slice(0, 4)}) — ⭐ {movie.vote_average}
-          </li>
-        ))}
-      </ul>
-    </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/favoritos"
+          element={
+            <ProtectedRoute>
+              <Favoritos />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
   )
 }
 

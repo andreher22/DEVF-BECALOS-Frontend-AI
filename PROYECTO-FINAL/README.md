@@ -148,9 +148,49 @@ backend/
     └── popular.mock.json # Datos de ejemplo (fallback sin API key)
 ```
 
+## 📌 Parte 4 — Protección de rutas
+
+Se agregó **React Router** y un flujo de autenticación de demostración
+para proteger la vista de **Favoritos** (información específica de un
+usuario, no pública):
+
+### Rutas de la aplicación
+
+| Ruta         | Acceso     | Descripción                                    |
+|--------------|------------|-------------------------------------------------|
+| `/`          | Público    | Listado de populares (Parte 3).                 |
+| `/login`     | Público    | Formulario de inicio de sesión.                 |
+| `/favoritos` | **Protegido** | Favoritos del usuario autenticado.           |
+
+### Protección del lado del frontend
+
+- `src/context/AuthContext.jsx` — Context API que guarda el token/usuario
+  (persistidos en `localStorage`) y expone `login`, `logout` e
+  `isAuthenticated`.
+- `src/components/ProtectedRoute.jsx` — envuelve `/favoritos`; si no hay
+  sesión, redirige a `/login` (guardando la ruta de origen para volver
+  tras iniciar sesión).
+- `src/pages/Login.jsx` — hace `POST /api/login` y, si es exitoso,
+  guarda el token en el contexto y navega a la ruta protegida.
+
+### Protección del lado del backend
+
+La protección en el frontend solo oculta la vista; el dato real se
+protege en el backend con un **JWT**:
+
+- `POST /api/login` — valida credenciales de demostración
+  (`DEMO_USER` / `DEMO_PASSWORD`, ver `.env.example`) y firma un JWT
+  (`backend/auth.js`, expira en 1 hora).
+- `GET /api/favorites` — protegido con el middleware `requireAuth`:
+  exige un header `Authorization: Bearer <token>` válido; sin él
+  responde `401`.
+
+**Credenciales de demostración:** usuario `demo`, contraseña `demo1234`
+(no hay registro de usuarios; es un login de ejemplo para el curso).
+
 ### Próximas partes
 
 - [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
 - [x] Parte 3: Backend con Express y comunicación front-back validada.
-- [ ] Parte 4: Búsqueda real contra TMDb, ruteo y detalle de título.
-- [ ] Parte 5: Favoritos con Context API y despliegue en Vercel.
+- [x] Parte 4: Protección de rutas (frontend con React Router + backend con JWT).
+- [ ] Parte 5: Búsqueda real contra TMDb, detalle de título y despliegue en Vercel.
