@@ -4,6 +4,8 @@ Proyecto Final del programa **BECALOS – Frontend con IA**. Aplicación
 React que permite buscar, explorar y guardar como favoritas películas y
 series usando una API pública de catálogo de cine.
 
+🔗 **Demo desplegada:** https://devf-becalos-frontend-ai.vercel.app
+
 Este repositorio se construye **por partes**, conforme se avanza en el
 programa. Esta carpeta (`PROYECTO-FINAL/`) contiene la entrega
 correspondiente a cada parte del proyecto final (distinto de los
@@ -311,8 +313,15 @@ api/
 6. Cada push a `main` vuelve a desplegar solo (Vercel ya conecta CI/CD
    con el repositorio de GitHub).
 
-**Aplicación desplegada:** _pendiente de agregar la URL una vez
-completado el despliegue en la cuenta de Vercel._
+**Aplicación desplegada:** https://devf-becalos-frontend-ai.vercel.app
+
+> Nota: durante el import, Vercel detectó `backend/` como un segundo
+> "servicio" (por su `package.json` con Express) y pidió el formato
+> `vercel.json` con `"services"`. Se optó por el `vercel.json` clásico
+> (un solo proyecto: el frontend Vite + `api/` como funciones
+> serverless), ya que el formato `"services"` no desplegaba `api/`
+> correctamente (daba 404 en las rutas de la API). `backend/` queda
+> fuera del despliegue, tal como se planeó: solo se usa en local.
 
 ### Próximas partes
 
