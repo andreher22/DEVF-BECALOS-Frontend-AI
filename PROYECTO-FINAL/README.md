@@ -64,19 +64,44 @@ del curso (cada "Parte" del proyecto final se trabaja como un sprint).
 El detalle de la metodología, roles, herramientas y acuerdos se
 documenta en [`ACUERDOS-DE-TRABAJO.md`](./ACUERDOS-DE-TRABAJO.md).
 
+## 📌 Parte 2 — Estructura del proyecto con Vite
+
+Se inicializó la aplicación con `npm create vite@latest -- --template react`
+y se limpió el contenido de ejemplo del starter, dejando una pantalla
+placeholder que identifica el proyecto mientras se construyen las
+vistas reales en las siguientes partes.
+
+### Cómo correrlo
+
+```bash
+cd PROYECTO-FINAL
+npm install
+npm run dev      # entorno de desarrollo
+npm run build    # build de producción
+```
+
 ### Estructura del repositorio (esta entrega)
 
 ```
 PROYECTO-FINAL/
 ├── README.md                 # Descripción del proyecto (este archivo)
 ├── ACUERDOS-DE-TRABAJO.md    # Metodología y acuerdos de trabajo
-└── src/                      # Código fuente de la app (se agrega en próximas partes)
+├── .gitignore                # Generado por Vite (node_modules, dist, etc.)
+├── index.html                # Punto de entrada HTML
+├── package.json / package-lock.json
+├── vite.config.js
+├── public/
+│   └── favicon.svg
+└── src/
+    ├── main.jsx               # Punto de entrada de React
+    ├── App.jsx                # Componente raíz (placeholder de esta parte)
+    ├── App.css
+    └── index.css
 ```
 
 ### Próximas partes
 
-- [ ] Parte 2: Inicialización del proyecto React (Vite) y estructura de
-      componentes.
+- [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
 - [ ] Parte 3: Consumo de la API de TMDb (búsqueda y listados).
 - [ ] Parte 4: Ruteo, detalle de título y favoritos con Context API.
 - [ ] Parte 5: Despliegue en Vercel.

@@ -56,3 +56,4 @@ Una parte del proyecto se considera terminada cuando:
 | Fecha       | Parte   | Acuerdo / avance                                                                 |
 |-------------|---------|------------------------------------------------------------------------------------|
 | 2026-09-02  | Parte 1 | Se define el proyecto (Explorador de Películas y Series) y esta metodología de trabajo. |
+| 2026-09-02  | Parte 2 | Se crea la app con Vite + React y se limpia el contenido de ejemplo del starter. |
