@@ -57,3 +57,4 @@ Una parte del proyecto se considera terminada cuando:
 |-------------|---------|------------------------------------------------------------------------------------|
 | 2026-09-02  | Parte 1 | Se define el proyecto (Explorador de Películas y Series) y esta metodología de trabajo. |
 | 2026-09-02  | Parte 2 | Se crea la app con Vite + React y se limpia el contenido de ejemplo del starter. |
+| 2026-09-02  | Parte 3 | Se agrega backend con Express (proxy a TMDb con fallback a datos de ejemplo) y se valida la comunicación front-back con una solicitud de muestra. |

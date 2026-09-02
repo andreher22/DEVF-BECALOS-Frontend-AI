@@ -1,0 +1,19 @@
+{
+  "name": "cine-explorer-backend",
+  "version": "1.0.0",
+  "description": "Backend Express de CineExplorer: expone endpoints propios y hace de proxy hacia la API de TMDb.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1"
+  }
+}

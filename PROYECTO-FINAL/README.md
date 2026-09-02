@@ -99,9 +99,58 @@ PROYECTO-FINAL/
     └── index.css
 ```
 
+## 📌 Parte 3 — Backend y comunicación front-back
+
+Se agregó un backend propio en **Express** (`backend/`) que expone
+endpoints propios y hace de proxy hacia la API de **TMDb**
+([The Movie Database](https://www.themoviedb.org/documentation/api)):
+
+- `GET /api/health` — endpoint de salud.
+- `GET /api/movies/popular` — **solicitud de muestra** que valida la
+  comunicación front-back: si hay una `TMDB_API_KEY` configurada
+  (ver `backend/.env.example`), consulta la API real de TMDb; si no,
+  responde con datos de ejemplo locales (`backend/data/popular.mock.json`)
+  para no bloquear el desarrollo mientras se gestiona la API key.
+
+El frontend (Vite) consume ese endpoint desde `src/App.jsx` con
+`fetch('/api/movies/popular')`, y en desarrollo Vite hace **proxy** de
+`/api` hacia `http://localhost:8080` (ver `vite.config.js`), así el
+front nunca necesita conocer la URL del backend.
+
+### Cómo correr frontend + backend
+
+```bash
+# Terminal 1 — backend
+cd PROYECTO-FINAL/backend
+npm install
+cp .env.example .env   # opcional: agrega tu TMDB_API_KEY
+npm start               # http://localhost:8080
+
+# Terminal 2 — frontend
+cd PROYECTO-FINAL
+npm install
+npm run dev              # http://localhost:5173
+```
+
+Con ambos corriendo, la vista principal del frontend hace la petición
+de muestra al backend y muestra el listado de películas (de TMDb si
+hay API key configurada, o de los datos de ejemplo si no la hay).
+
+### Estructura del backend
+
+```
+backend/
+├── .env.example        # Variables de entorno de referencia (PORT, TMDB_API_KEY)
+├── .gitignore           # node_modules, .env
+├── package.json
+├── server.js             # Servidor Express + endpoints
+└── data/
+    └── popular.mock.json # Datos de ejemplo (fallback sin API key)
+```
+
 ### Próximas partes
 
 - [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
-- [ ] Parte 3: Consumo de la API de TMDb (búsqueda y listados).
-- [ ] Parte 4: Ruteo, detalle de título y favoritos con Context API.
-- [ ] Parte 5: Despliegue en Vercel.
+- [x] Parte 3: Backend con Express y comunicación front-back validada.
+- [ ] Parte 4: Búsqueda real contra TMDb, ruteo y detalle de título.
+- [ ] Parte 5: Favoritos con Context API y despliegue en Vercel.

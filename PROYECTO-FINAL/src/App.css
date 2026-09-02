@@ -15,3 +15,19 @@
   color: #666;
   font-size: 0.95rem;
 }
+
+.placeholder .error {
+  color: #c0392b;
+}
+
+.movie-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.movie-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
