@@ -1,3 +1,4 @@
+import { AlertTriangle, Clapperboard, RefreshCw, Search } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import MovieList from '../components/MovieList'
 import { apiFetch } from '../lib/api'
@@ -50,20 +51,28 @@ function Home() {
 
   return (
     <section className="page">
-      <h1>🎬 CineExplorer</h1>
-      <p>Explorador de películas y series — Proyecto Final BECALOS Frontend.</p>
-      <p className="status">
-        Populares desde <code>GET /api/movies/popular</code>.
-        {source && ` Origen de los datos: ${source}.`}
-      </p>
+      <header className="page-header">
+        <span className="page-eyebrow">
+          <Clapperboard size={14} />
+          Populares
+        </span>
+        <h1>Explora películas y series</h1>
+        <p className="subtitle">
+          Datos desde <code>GET /api/movies/popular</code>
+          {source && ` · origen: ${source}`}
+        </p>
+      </header>
 
       <div className="filters">
-        <input
-          type="search"
-          placeholder="Buscar por título…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        <label className="search-field">
+          <Search size={16} />
+          <input
+            type="search"
+            placeholder="Buscar por título…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="popularity">Orden original</option>
           <option value="rating">Mejor calificadas</option>
@@ -71,14 +80,26 @@ function Home() {
         </select>
       </div>
 
-      {isLoading && <p className="status">Cargando películas…</p>}
+      {isLoading && (
+        <div className="status-row">
+          <span className="spinner" />
+          Cargando películas…
+        </div>
+      )}
+
       {error && (
-        <p className="error">
-          {error}{' '}
-          <button type="button" onClick={loadPopular}>
-            Reintentar
-          </button>
-        </p>
+        <div className="alert">
+          <AlertTriangle size={18} />
+          <div>
+            <p>{error}</p>
+            <div className="alert-actions">
+              <button type="button" className="btn-retry" onClick={loadPopular}>
+                <RefreshCw size={13} />
+                Reintentar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {!isLoading && !error && (

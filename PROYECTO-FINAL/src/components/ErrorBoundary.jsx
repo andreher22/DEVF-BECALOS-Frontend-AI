@@ -1,3 +1,4 @@
+import { AlertTriangle } from 'lucide-react'
 import { Component } from 'react'
 
 class ErrorBoundary extends Component {
@@ -18,14 +19,17 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.error) {
       return (
-        <section className="page">
+        <section className="error-boundary">
+          <div className="auth-icon">
+            <AlertTriangle size={20} />
+          </div>
           <h1>Algo salió mal</h1>
           <p className="status">
             Ocurrió un error inesperado en la aplicación. Puedes intentar
             de nuevo.
           </p>
-          <p className="error">{this.state.error.message}</p>
-          <button type="button" onClick={this.handleReset}>
+          <p className="form-error">{this.state.error.message}</p>
+          <button type="button" className="btn-primary" onClick={this.handleReset}>
             Reintentar
           </button>
         </section>

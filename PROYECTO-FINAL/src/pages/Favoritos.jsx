@@ -1,3 +1,4 @@
+import { AlertTriangle, RefreshCw, Star } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MovieList from '../components/MovieList'
@@ -38,20 +39,38 @@ function Favoritos() {
 
   return (
     <section className="page">
-      <h1>⭐ Mis favoritos</h1>
-      <p className="status">
-        Vista protegida: solo visible para <strong>{username}</strong>,
-        cargada desde <code>GET /api/favorites</code> (requiere JWT).
-      </p>
-
-      {isLoading && <p className="status">Cargando favoritos…</p>}
-      {error && (
-        <p className="error">
-          {error}{' '}
-          <button type="button" onClick={loadFavorites}>
-            Reintentar
-          </button>
+      <header className="page-header">
+        <span className="page-eyebrow">
+          <Star size={14} />
+          Vista protegida
+        </span>
+        <h1>Mis favoritos</h1>
+        <p className="subtitle">
+          Solo visible para <strong>{username}</strong> · desde{' '}
+          <code>GET /api/favorites</code> (requiere JWT)
         </p>
+      </header>
+
+      {isLoading && (
+        <div className="status-row">
+          <span className="spinner" />
+          Cargando favoritos…
+        </div>
+      )}
+
+      {error && (
+        <div className="alert">
+          <AlertTriangle size={18} />
+          <div>
+            <p>{error}</p>
+            <div className="alert-actions">
+              <button type="button" className="btn-retry" onClick={loadFavorites}>
+                <RefreshCw size={13} />
+                Reintentar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {!isLoading && !error && (

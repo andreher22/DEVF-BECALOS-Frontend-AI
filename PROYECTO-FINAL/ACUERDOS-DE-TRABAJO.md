@@ -62,3 +62,4 @@ Una parte del proyecto se considera terminada cuando:
 | 2026-09-02  | Parte 5 | Se agrega validación con Zod (login, front y back) y manejo de errores centralizado (`apiFetch`, `ErrorBoundary`, middleware de errores en Express). |
 | 2026-09-02  | Parte 6 | Se analiza el proyecto y se aplican `useMemo` (filtrado/orden en Home) y `useCallback` (recarga/reintentar en Home y Favoritos) junto con un `MovieList` memoizado con `React.memo`. |
 | 2026-09-02  | Parte 7 | Se agregan Vercel Serverless Functions (`api/`) equivalentes al backend de Express, y `vercel.json` para el despliegue. Proyecto importado y desplegado en Vercel: https://devf-becalos-frontend-ai.vercel.app (tras ajustar `vercel.json` del formato "services" al clásico, que sí reconoce `api/`). |
+| 2026-09-02  | Parte 8 | Revisión final del flujo completo en producción y rediseño visual (tema oscuro, tipografías Poppins/Inter, íconos `lucide-react`, tarjetas de película, estados de carga/error). |

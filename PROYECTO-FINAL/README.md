@@ -323,6 +323,47 @@ api/
 > correctamente (daba 404 en las rutas de la API). `backend/` queda
 > fuera del despliegue, tal como se planeó: solo se usa en local.
 
+## 📌 Parte 8 — Revisión final y diseño
+
+Revisión previa a la entrega/desgraduación: se verificó que el flujo
+completo funciona en producción (populares, búsqueda/orden, login,
+favoritos protegidos, cierre de sesión, manejo de errores) y se le dio
+una pasada de diseño para que se vea como una app terminada, no como
+un prototipo.
+
+### Cambios de diseño
+
+- **Tema visual propio** ("cine" oscuro): paleta de color en
+  `src/index.css` (fondo oscuro, acento dorado), tipografías
+  **Poppins** (títulos) e **Inter** (texto) vía Google Fonts.
+- **Íconos reales** con [`lucide-react`](https://lucide.dev/) en toda
+  la app (navbar, buscador, calificación, alertas, login) en lugar de
+  emojis sueltos.
+- **Navbar** con logo, enlaces con estado activo resaltado y acciones
+  (iniciar sesión / cerrar sesión) con ícono.
+- **Tarjetas de película** (`MovieList` → grid de `movie-card`) en vez
+  de una lista de texto: póster (si la API trae `poster_path`, como al
+  usar TMDb real) o un ícono de reserva, badge de calificación con
+  estrella.
+- **Estados de UI** rediseñados: spinner de carga, alertas de error
+  con ícono y botón "Reintentar", estado vacío ilustrado.
+- **Login** como tarjeta centrada con ícono y pista de credenciales de
+  demostración.
+- Diseño **responsive**: la cuadrícula de películas y la navbar se
+  adaptan a pantallas angostas.
+
+### Checklist de revisión
+
+- [x] `npm run build` sin errores.
+- [x] `npm run lint` sin errores (solo warnings preexistentes, no
+      bloqueantes).
+- [x] Flujo completo probado en la demo desplegada: populares → buscar/ordenar
+      → login → favoritos → logout.
+- [x] Variables de entorno de producción configuradas en Vercel
+      (`JWT_SECRET` propio, no el valor de ejemplo del repo).
+- [x] README y `ACUERDOS-DE-TRABAJO.md` reflejan el estado real del
+      proyecto en cada entrega.
+
 ### Próximas partes
 
 - [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
@@ -331,4 +372,5 @@ api/
 - [x] Parte 5: Validaciones con Zod y manejo de errores (frontend y backend).
 - [x] Parte 6: Optimización con useMemo/useCallback (búsqueda/orden en Home).
 - [x] Parte 7: Preparación y despliegue en Vercel (serverless functions + vercel.json).
-- [ ] Parte 8: Búsqueda real contra TMDb y detalle de título.
+- [x] Parte 8: Revisión final y rediseño visual.
+- [ ] Futuro (fuera del alcance del curso): búsqueda contra TMDb real y vista de detalle de título.

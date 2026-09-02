@@ -1,4 +1,5 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { Clapperboard, Home as HomeIcon, LogIn, LogOut, Star } from 'lucide-react'
+import { NavLink, Route, Routes } from 'react-router-dom'
 import './App.css'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
@@ -12,14 +13,44 @@ function App() {
   return (
     <>
       <nav className="navbar">
-        <Link to="/">Inicio</Link>
-        <Link to="/favoritos">Favoritos</Link>
+        <NavLink to="/" className="navbar-brand">
+          <Clapperboard size={22} />
+          CineExplorer
+        </NavLink>
+
+        <div className="navbar-links">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+          >
+            <HomeIcon size={16} />
+            <span>Inicio</span>
+          </NavLink>
+          <NavLink
+            to="/favoritos"
+            className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}
+          >
+            <Star size={16} />
+            <span>Favoritos</span>
+          </NavLink>
+        </div>
+
         {isAuthenticated ? (
-          <span className="nav-user">
-            {username} · <button type="button" onClick={logout}>Cerrar sesión</button>
-          </span>
+          <div className="nav-user">
+            <span>
+              Hola, <strong>{username}</strong>
+            </span>
+            <button type="button" className="icon-btn" onClick={logout}>
+              <LogOut size={14} />
+              Salir
+            </button>
+          </div>
         ) : (
-          <Link to="/login">Iniciar sesión</Link>
+          <NavLink to="/login" className="nav-link" style={{ marginLeft: 'auto' }}>
+            <LogIn size={16} />
+            <span>Iniciar sesión</span>
+          </NavLink>
         )}
       </nav>
 

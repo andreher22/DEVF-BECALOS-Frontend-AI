@@ -1,3 +1,4 @@
+import { LogIn } from 'lucide-react'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
@@ -54,44 +55,52 @@ function Login() {
   }
 
   return (
-    <section className="page">
-      <h1>Iniciar sesión</h1>
-      <p className="status">
-        Acceso de demostración: usuario <code>demo</code>, contraseña{' '}
-        <code>demo1234</code>.
-      </p>
+    <section className="page auth-page">
+      <div className="auth-card">
+        <div className="auth-icon">
+          <LogIn size={20} />
+        </div>
+        <h1>Iniciar sesión</h1>
+        <p className="status">Accede para ver tus películas favoritas</p>
 
-      <form className="login-form" onSubmit={handleSubmit} noValidate>
-        <label>
-          Usuario
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            aria-invalid={Boolean(fieldErrors.username)}
-          />
-          {fieldErrors.username && (
-            <span className="field-error">{fieldErrors.username}</span>
-          )}
-        </label>
-        <label>
-          Contraseña
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            aria-invalid={Boolean(fieldErrors.password)}
-          />
-          {fieldErrors.password && (
-            <span className="field-error">{fieldErrors.password}</span>
-          )}
-        </label>
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Entrando…' : 'Entrar'}
-        </button>
-      </form>
+        <p className="demo-hint">
+          Demo: usuario <code>demo</code> · contraseña <code>demo1234</code>
+        </p>
 
-      {formError && <p className="error">{formError}</p>}
+        <form className="login-form" onSubmit={handleSubmit} noValidate>
+          <label className="field-label">
+            Usuario
+            <input
+              type="text"
+              className="field-input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              aria-invalid={Boolean(fieldErrors.username)}
+            />
+            {fieldErrors.username && (
+              <span className="field-error">{fieldErrors.username}</span>
+            )}
+          </label>
+          <label className="field-label">
+            Contraseña
+            <input
+              type="password"
+              className="field-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              aria-invalid={Boolean(fieldErrors.password)}
+            />
+            {fieldErrors.password && (
+              <span className="field-error">{fieldErrors.password}</span>
+            )}
+          </label>
+          <button type="submit" className="btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Entrando…' : 'Entrar'}
+          </button>
+        </form>
+
+        {formError && <p className="form-error">{formError}</p>}
+      </div>
     </section>
   )
 }
