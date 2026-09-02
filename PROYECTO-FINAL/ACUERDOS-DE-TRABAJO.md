@@ -60,3 +60,4 @@ Una parte del proyecto se considera terminada cuando:
 | 2026-09-02  | Parte 3 | Se agrega backend con Express (proxy a TMDb con fallback a datos de ejemplo) y se valida la comunicación front-back con una solicitud de muestra. |
 | 2026-09-02  | Parte 4 | Se protege la ruta `/favoritos` con React Router + Context API en el frontend, y con JWT (`/api/login`, `requireAuth`) en el backend. |
 | 2026-09-02  | Parte 5 | Se agrega validación con Zod (login, front y back) y manejo de errores centralizado (`apiFetch`, `ErrorBoundary`, middleware de errores en Express). |
+| 2026-09-02  | Parte 6 | Se analiza el proyecto y se aplican `useMemo` (filtrado/orden en Home) y `useCallback` (recarga/reintentar en Home y Favoritos) junto con un `MovieList` memoizado con `React.memo`. |

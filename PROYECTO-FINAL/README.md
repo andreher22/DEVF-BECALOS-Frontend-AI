@@ -227,10 +227,43 @@ de errores de las peticiones al backend.
   render de algún componente, muestra una pantalla de "algo salió mal"
   con opción de reintentar, en vez de una pantalla en blanco.
 
+## 📌 Parte 6 — Optimización con useMemo / useCallback
+
+### Análisis
+
+Se revisó el estado actual del proyecto (Home, Favoritos, Login) para
+encontrar candidatos reales a optimización, en vez de aplicar memoización
+"porque sí":
+
+- **Login** no tiene listas ni cálculos derivados: no se tocó.
+- **Home** no tenía forma de buscar/ordenar entre las películas
+  populares; se agregó esa funcionalidad y, junto con ella, sí aparece
+  un cálculo derivado (filtrar + ordenar) que vale la pena memoizar.
+- **Home** y **Favoritos** repetían la misma lógica de renderizado de
+  lista de películas.
+
+### Cambios
+
+- `src/components/MovieList.jsx` — se extrajo la lista de películas
+  (antes duplicada en Home y Favoritos) a un componente de
+  presentación envuelto en `React.memo`, para que no vuelva a
+  renderizarse si la prop `movies` no cambió de referencia.
+- `src/pages/Home.jsx` — se agregó **búsqueda por título** y
+  **orden** (original / mejor calificadas / A-Z):
+  - `useMemo` calcula `visibleMovies` (filtrado + ordenado) solo
+    cuando cambian `movies`, `query` o `sortBy`, en lugar de en cada
+    render de Home.
+  - `useCallback` memoiza `loadPopular` para reutilizarla tanto en el
+    `useEffect` de carga inicial como en el botón **Reintentar** sin
+    recrear la función (ni disparar el efecto de nuevo) en cada render.
+- `src/pages/Favoritos.jsx` — mismo patrón de `useCallback` para
+  `loadFavorites` + botón **Reintentar**.
+
 ### Próximas partes
 
 - [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
 - [x] Parte 3: Backend con Express y comunicación front-back validada.
 - [x] Parte 4: Protección de rutas (frontend con React Router + backend con JWT).
 - [x] Parte 5: Validaciones con Zod y manejo de errores (frontend y backend).
-- [ ] Parte 6: Búsqueda real contra TMDb, detalle de título y despliegue en Vercel.
+- [x] Parte 6: Optimización con useMemo/useCallback (búsqueda/orden en Home).
+- [ ] Parte 7: Búsqueda real contra TMDb, detalle de título y despliegue en Vercel.

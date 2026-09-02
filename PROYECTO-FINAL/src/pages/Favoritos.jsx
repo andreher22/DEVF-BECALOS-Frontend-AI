@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import MovieList from '../components/MovieList'
 import { useAuth } from '../context/AuthContext'
 import { ApiError, apiFetch } from '../lib/api'
 
@@ -10,7 +11,12 @@ function Favoritos() {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
+  // useCallback: se reutiliza en el useEffect inicial y en el botón
+  // "Reintentar" sin recrear la función (y sin volver a disparar el
+  // efecto) en cada render de Favoritos.
+  const loadFavorites = useCallback(() => {
+    setIsLoading(true)
+    setError(null)
     apiFetch('/api/favorites', {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -26,6 +32,10 @@ function Favoritos() {
       .finally(() => setIsLoading(false))
   }, [token, logout, navigate])
 
+  useEffect(() => {
+    loadFavorites()
+  }, [loadFavorites])
+
   return (
     <section className="page">
       <h1>⭐ Mis favoritos</h1>
@@ -35,15 +45,18 @@ function Favoritos() {
       </p>
 
       {isLoading && <p className="status">Cargando favoritos…</p>}
-      {error && <p className="error">{error}</p>}
+      {error && (
+        <p className="error">
+          {error}{' '}
+          <button type="button" onClick={loadFavorites}>
+            Reintentar
+          </button>
+        </p>
+      )}
 
-      <ul className="movie-list">
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <strong>{movie.title}</strong> ({movie.release_date?.slice(0, 4)}) — ⭐ {movie.vote_average}
-          </li>
-        ))}
-      </ul>
+      {!isLoading && !error && (
+        <MovieList movies={movies} emptyMessage="Aún no tienes películas favoritas." />
+      )}
     </section>
   )
 }
