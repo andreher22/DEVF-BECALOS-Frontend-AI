@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { ApiError, apiFetch } from '../lib/api'
 
 function Favoritos() {
-  const { token, username } = useAuth()
+  const { token, username, logout } = useAuth()
+  const navigate = useNavigate()
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/favorites', {
+    apiFetch('/api/favorites', {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => {
-        if (!res.ok) throw new Error('No se pudieron cargar los favoritos')
-        return res.json()
-      })
       .then((data) => setMovies(data.results ?? []))
-      .catch((err) => setError(err.message))
-  }, [token])
+      .catch((err) => {
+        if (err instanceof ApiError && err.status === 401) {
+          logout()
+          navigate('/login', { replace: true })
+          return
+        }
+        setError(err.message)
+      })
+      .finally(() => setIsLoading(false))
+  }, [token, logout, navigate])
 
   return (
     <section className="page">
@@ -26,6 +34,7 @@ function Favoritos() {
         cargada desde <code>GET /api/favorites</code> (requiere JWT).
       </p>
 
+      {isLoading && <p className="status">Cargando favoritos…</p>}
       {error && <p className="error">{error}</p>}
 
       <ul className="movie-list">

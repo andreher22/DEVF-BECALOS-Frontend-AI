@@ -188,9 +188,49 @@ protege en el backend con un **JWT**:
 **Credenciales de demostración:** usuario `demo`, contraseña `demo1234`
 (no hay registro de usuarios; es un login de ejemplo para el curso).
 
+## 📌 Parte 5 — Validaciones y manejo de errores
+
+Se agregó **Zod** para validar formularios y se centralizó el manejo
+de errores de las peticiones al backend.
+
+### Validación con Zod
+
+- `src/schemas/loginSchema.js` — valida el formulario de login
+  (usuario obligatorio, contraseña de al menos 4 caracteres) **antes**
+  de llamar a la API; los errores se muestran debajo de cada campo.
+- `backend/schemas/loginSchema.js` — el backend valida el mismo `body`
+  con Zod y responde `400` con el detalle por campo si la forma de los
+  datos es inválida (defensa adicional, sin depender solo del frontend).
+
+### Manejo de errores de la API
+
+- `src/lib/api.js` — un `apiFetch()` que envuelve `fetch` y normaliza
+  dos tipos de fallo en un mismo `ApiError`:
+  - **Errores de red** (backend caído, sin conexión): mensaje genérico
+    "No se pudo conectar con el servidor...".
+  - **Errores de negocio** (4xx/5xx del backend): usa el `message` que
+    devuelve la API (credenciales incorrectas, datos inválidos, token
+    vencido, etc.).
+- `Home.jsx`, `Login.jsx` y `Favoritos.jsx` usan `apiFetch` y muestran
+  `error.message` en la vista, además de un estado de carga.
+- En `Favoritos.jsx`, si la API responde `401` (token vencido o
+  inválido) se cierra la sesión automáticamente y se redirige a
+  `/login`, en vez de mostrar un error crudo.
+- `backend/server.js` agrega un middleware de errores al final que
+  captura JSON malformado en el body y cualquier error no controlado,
+  respondiendo siempre con un `{ message }` legible.
+
+### Manejo de errores de la interfaz (React)
+
+- `src/components/ErrorBoundary.jsx` — Error Boundary de React que
+  envuelve toda la app (`main.jsx`); si un error inesperado rompe el
+  render de algún componente, muestra una pantalla de "algo salió mal"
+  con opción de reintentar, en vez de una pantalla en blanco.
+
 ### Próximas partes
 
 - [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
 - [x] Parte 3: Backend con Express y comunicación front-back validada.
 - [x] Parte 4: Protección de rutas (frontend con React Router + backend con JWT).
-- [ ] Parte 5: Búsqueda real contra TMDb, detalle de título y despliegue en Vercel.
+- [x] Parte 5: Validaciones con Zod y manejo de errores (frontend y backend).
+- [ ] Parte 6: Búsqueda real contra TMDb, detalle de título y despliegue en Vercel.

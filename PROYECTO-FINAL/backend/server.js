@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const { requireAuth, JWT_SECRET } = require("./auth");
+const { loginSchema } = require("./schemas/loginSchema");
 const mockPopular = require("./data/popular.mock.json");
 const mockFavorites = require("./data/favorites.mock.json");
 
@@ -55,9 +56,18 @@ app.get("/api/movies/popular", async (req, res) => {
   }
 });
 
-// Login de demostración: valida usuario/contraseña fijos y firma un JWT.
+// Login de demostración: valida forma con Zod, credenciales fijas, y firma un JWT.
 app.post("/api/login", (req, res) => {
-  const { username, password } = req.body || {};
+  const parsed = loginSchema.safeParse(req.body);
+
+  if (!parsed.success) {
+    return res.status(400).json({
+      message: "Datos de inicio de sesión inválidos",
+      errors: parsed.error.flatten().fieldErrors,
+    });
+  }
+
+  const { username, password } = parsed.data;
 
   if (username !== DEMO_USER || password !== DEMO_PASSWORD) {
     return res.status(401).json({ message: "Usuario o contraseña incorrectos" });
@@ -73,6 +83,16 @@ app.post("/api/login", (req, res) => {
 // vista en el cliente.
 app.get("/api/favorites", requireAuth, (req, res) => {
   res.json({ user: req.user.username, results: mockFavorites });
+});
+
+// Manejo de errores no controlados (p. ej. JSON malformado en el body).
+app.use((err, req, res, next) => {
+  if (err.type === "entity.parse.failed") {
+    return res.status(400).json({ message: "El cuerpo de la petición no es JSON válido" });
+  }
+
+  console.error("Error no controlado:", err);
+  res.status(500).json({ message: "Ocurrió un error inesperado en el servidor" });
 });
 
 app.listen(port, () => {

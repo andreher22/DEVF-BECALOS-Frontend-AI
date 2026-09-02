@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react'
+import { apiFetch } from '../lib/api'
 
 function Home() {
   const [movies, setMovies] = useState([])
   const [source, setSource] = useState(null)
   const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/movies/popular')
-      .then((res) => res.json())
+    apiFetch('/api/movies/popular')
       .then((data) => {
         setMovies(data.results ?? [])
         setSource(data.source)
       })
-      .catch(() => setError('No se pudo conectar con el backend.'))
+      .catch((err) => setError(err.message))
+      .finally(() => setIsLoading(false))
   }, [])
 
   return (
@@ -24,6 +26,7 @@ function Home() {
         {source && ` Origen de los datos: ${source}.`}
       </p>
 
+      {isLoading && <p className="status">Cargando películas…</p>}
       {error && <p className="error">{error}</p>}
 
       <ul className="movie-list">
