@@ -259,6 +259,61 @@ encontrar candidatos reales a optimización, en vez de aplicar memoización
 - `src/pages/Favoritos.jsx` — mismo patrón de `useCallback` para
   `loadFavorites` + botón **Reintentar**.
 
+## 📌 Parte 7 — Despliegue en Vercel
+
+### Cómo se preparó el proyecto
+
+Vercel no ejecuta servidores persistentes como `backend/server.js`;
+para producción se convirtieron esos mismos endpoints a
+**Vercel Serverless Functions**, que se despliegan junto con el
+frontend en un solo proyecto:
+
+```
+api/
+├── _lib/               # Código compartido (Vercel ignora carpetas con "_")
+│   ├── auth.js          # Firma/verifica JWT
+│   ├── data.js           # Datos de ejemplo (fallback sin TMDB_API_KEY)
+│   └── loginSchema.js     # Mismo esquema de Zod que el frontend
+├── health.js             # GET /api/health
+├── login.js               # POST /api/login
+├── favorites.js            # GET /api/favorites (protegido con JWT)
+└── movies/
+    └── popular.js           # GET /api/movies/popular
+```
+
+- `vercel.json` — indica el framework (Vite), el comando de build, la
+  carpeta de salida (`dist`) y una reescritura para que las rutas de
+  React Router (`/favoritos`, `/login`, etc.) funcionen al recargar la
+  página o entrar directo por URL, sin romper las rutas `/api/*`.
+- `backend/` se conserva tal cual para **desarrollo local** (como se
+  pidió en la Parte 3); `api/` es la versión equivalente para
+  **producción en Vercel**. La lógica de negocio es la misma en ambos.
+
+### Pasos para desplegar (cuenta personal de Vercel)
+
+1. Crear cuenta / iniciar sesión en [vercel.com](https://vercel.com)
+   con la cuenta de GitHub `andreher22`.
+2. **Add New… → Project** e importar el repositorio
+   `DEVF-BECALOS-Frontend-AI`.
+3. En la configuración del proyecto:
+   - **Root Directory:** `PROYECTO-FINAL` (el repo tiene varias
+     carpetas de módulos; solo esta carpeta es la app).
+   - **Framework Preset:** Vite (se detecta automáticamente).
+4. Variables de entorno (Settings → Environment Variables):
+   | Variable         | Valor sugerido                          |
+   |------------------|------------------------------------------|
+   | `JWT_SECRET`     | una cadena aleatoria larga (no la de ejemplo) |
+   | `DEMO_USER`      | `demo` (o el usuario que prefieras)       |
+   | `DEMO_PASSWORD`  | `demo1234` (o la contraseña que prefieras) |
+   | `TMDB_API_KEY`   | opcional — si no se define, la API usa datos de ejemplo |
+5. **Deploy**. Vercel construye el frontend y publica las funciones de
+   `api/` automáticamente.
+6. Cada push a `main` vuelve a desplegar solo (Vercel ya conecta CI/CD
+   con el repositorio de GitHub).
+
+**Aplicación desplegada:** _pendiente de agregar la URL una vez
+completado el despliegue en la cuenta de Vercel._
+
 ### Próximas partes
 
 - [x] Parte 2: Inicialización del proyecto React (Vite) y estructura base.
@@ -266,4 +321,5 @@ encontrar candidatos reales a optimización, en vez de aplicar memoización
 - [x] Parte 4: Protección de rutas (frontend con React Router + backend con JWT).
 - [x] Parte 5: Validaciones con Zod y manejo de errores (frontend y backend).
 - [x] Parte 6: Optimización con useMemo/useCallback (búsqueda/orden en Home).
-- [ ] Parte 7: Búsqueda real contra TMDb, detalle de título y despliegue en Vercel.
+- [x] Parte 7: Preparación y despliegue en Vercel (serverless functions + vercel.json).
+- [ ] Parte 8: Búsqueda real contra TMDb y detalle de título.
