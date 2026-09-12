@@ -15,6 +15,9 @@ dist-ssr
 # Vercel
 .vercel
 
+# Documentacion local (no se sube al repo)
+documentacion-local/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
